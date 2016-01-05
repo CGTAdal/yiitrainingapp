@@ -1,5 +1,6 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'add-user'
+	'id'=>'add-user',
+	'action' => Yii::app()->createUrl('post/add'),  //<- your form action here
 )); ?>
 
     <?php echo $form->labelEx($model,'name'); ?>
