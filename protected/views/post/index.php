@@ -1,0 +1,1 @@
+<span style="align:right;"><?php echo CHtml::link('Add New', $this->createAbsoluteUrl('post/add',array())); ?></span>
