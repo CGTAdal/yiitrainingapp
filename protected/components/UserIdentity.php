@@ -7,23 +7,41 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	private $_id;
+	const ERROR_USERNAME_NOT_ACTIVE  = 3;
+	const ERROR_EMAIL_NOT_VERIFIED  = 4;	
 
+	private $_id;	
 	/**
 	 * Authenticates a user.
 	 * @return boolean whether authentication succeeds.
 	 */
+	public $_role; 
+	 
 	public function authenticate()
 	{
-		$user=User::model()->find('LOWER(username)=?',array(strtolower($this->username)));
-		if($user===null)
+		$user=User::model()->find(
+			'LOWER(email)=:email',
+			array(
+				':email'=>strtolower($this->username))
+			);
+		if($user===null){
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		else if(!$user->validatePassword($this->password))
+		
+		}else if(!$user->validatePassword($this->password)){			
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		else
-		{
+			echo $this->errorCode;die;
+		/*}elseif($user->u_status == 0){
+			$this->errorCode=self::ERROR_USERNAME_NOT_ACTIVE;
+		}elseif($user->u_mail_verify == 0){
+			$this->errorCode=self::ERROR_EMAIL_NOT_VERIFIED; */
+		}else{
+			//$user->u_last_login_date = new CDbExpression('NOW()');
+			//$user->save(false);							            
 			$this->_id=$user->id;
-			$this->username=$user->username;
+			$this->username=$user->email;
+		//	$this->_role=$user->u_role;
+			Yii::app()->session['UserId']=$user->id;
+			Yii::app()->session['UserName']=$user->email;
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return $this->errorCode==self::ERROR_NONE;
@@ -36,4 +54,10 @@ class UserIdentity extends CUserIdentity
 	{
 		return $this->_id;
 	}
+	
+	public function getRole()
+	{
+		return $this->_role;
+	}
+
 }

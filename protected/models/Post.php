@@ -16,6 +16,14 @@ class Post extends CActiveRecord
 	const STATUS_PUBLISHED=2;
 	const STATUS_ARCHIVED=3;
 
+	public $username;
+	public $password;
+	
+
+	
+
+
+
 	private $_oldTags;
 
 	/**

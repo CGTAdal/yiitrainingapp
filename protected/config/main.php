@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Yii Blog Demo',
+	'name'=>'Yii learning',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -39,6 +39,8 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix' => 'tbl_',
+			'enableProfiling' => true,
+        	//'enableParamLogging' => true,
 		),
 		
 		'errorHandler'=>array(
@@ -47,10 +49,11 @@ return array(
 		),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+			'showScriptName'=>false,
 			'rules'=>array(
 				'post/<id:\d+>/<title:.*?>'=>'post/view',
 				'posts/<tag:.*?>'=>'post/index',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>'
 			),
 		),
 		'log'=>array(
@@ -61,11 +64,11 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				/*
+				
 				array(
-					'class'=>'CWebLogRoute',
+					 'class'=>'CWebLogRoute',
 				),
-				*/
+				
 			),
 		),
 	),
