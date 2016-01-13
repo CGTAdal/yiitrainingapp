@@ -15,6 +15,7 @@
 
 if(!Yii::app()->user->isGuest){
     $this->widget('zii.widgets.grid.CGridView', array(
+        'id'=>'file-grid',
         'dataProvider'=>$model->search(),
         'filter'=>$model, 
         'columns'=>array(   
@@ -34,15 +35,17 @@ if(!Yii::app()->user->isGuest){
                 'type' => 'raw',
             ),
 
-
-
             array(            // display a column with "view", "update" and "delete" buttons
                 'class'=>'CButtonColumn',
-                //'header'=>CHtml::dropDownList('pageSize',$pageSize,array(2=>2,4=>4,6=>6,8=>8),array()),
+                'header'=>CHtml::dropDownList('pageSize',$pageSize,array(2=>2,4=>4,6=>6,8=>8),array(
+                      'onchange'=>" $.fn.yiiGridView.update('file-grid',{ data:{pageSize: $(this).val() }})",
+
+                ))
         ),
     )));
 }else{
     $this->widget('zii.widgets.grid.CGridView', array(
+        'id'=>'file-grid',
         'dataProvider'=>$model->search(),
         'filter'=>$model, 
         'columns'=>array(   
@@ -74,5 +77,5 @@ if(!Yii::app()->user->isGuest){
             alert(1);
            // $.fn.yiiGridView.update('category-grid',{ data:{ pageSize: $(this).val() }});
         });
-    });*/
+    }); */
 </script>

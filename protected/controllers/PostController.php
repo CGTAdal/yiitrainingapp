@@ -55,8 +55,9 @@ class PostController extends Controller
 		$Page->pageSize = 2;
 		$Page->applyLimit($Criteria);*/
 		$Page=	2;
+		$model = new User('search');
 
-		 $model = new User('search');
+
         // HERE GET YOUR SEARCH PARAMETERS IF ANY
         //$model->unsetAttributes();
 /*
@@ -104,6 +105,8 @@ class PostController extends Controller
 		$errores	=	array();
 		// If form is submitted and data is correct...
 		// collect user input data
+
+
 		if(isset($_POST['User']))
 		{
 			$_POST['User']['role']	=	Yii::app()->params['subAdminRole'];

@@ -97,7 +97,12 @@ class User extends CActiveRecord
 	    	'name',
 	    	'email',
 	  );
-
+	 	
+		if (isset($_GET['pageSize'])) {
+			print_r($_GET['pageSize']);
+            Yii::app()->user->setState('pageSize',(int)$_GET['pageSize']);
+            unset($_GET['pageSize']);
+        }
 
 		return new CActiveDataProvider('User', array(
 			'criteria'=>$criteria,
