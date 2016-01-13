@@ -2,22 +2,54 @@
 	'id'=>'add-user'
 )); ?>
 
-    <?php echo $form->labelEx($model,'name'); ?>
-    <?php echo $form->textField($model, 'name'); ?>
-    <?php echo $form->error($model, 'name'); ?>
+<table>
+    <tr>
+        <th>Fields</th>
+        <th>Values</th>
+    </tr>
 
-	<?php echo $form->labelEx($model,'email'); ?>
-    <?php echo $form->textField($model, 'email'); ?>
-    <?php echo $form->error($model, 'email'); ?>
-	
+    <tr>
+        <td>
+            <?php echo $form->labelEx($model,'name'); ?>
+        </td>
+        <td>
+            <?php echo $form->textField($model, 'name'); ?>
+            <br>
+            <?php echo $form->error($model, 'name'); ?>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <?php echo $form->labelEx($model,'email'); ?>
+        </td>
+        <td>
+            <?php echo $form->textField($model, 'email'); ?>
+            <br>
+            <?php echo $form->error($model, 'email'); ?>
+        </td>
+    </tr>
+            
     <?php if($formType == 'add'){ ?>
-        <?php echo $form->labelEx($model,'password'); ?>
-        <?php echo $form->passwordField($model, 'password'); ?>
-        <?php echo $form->error($model, 'password'); ?>
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model,'password'); ?>
+            </td>
+            <td>
+                <?php echo $form->passwordField($model, 'password'); ?>
+                <br>
+                <?php echo $form->error($model, 'password'); ?>
+            </td>
+        </tr>
     <?php } ?>
 
-    <div class="form-group">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-    </div>
+    <tr>
+        <td colspan="2">
+            <div class="form-group">
+                <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+            </div>
+        </td>
+    </tr>
+</table>
 
 <?php $this->endWidget(); ?>

@@ -1,24 +1,61 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 )); ?>
+<table>
+    <tr>
+        <th>Fields</th>
+        <th>Values</th>
+    </tr>
 
-    <?php echo $form->labelEx($model,'name'); ?>
-    <?php echo $form->textField($model, 'name'); ?>
-    <?php echo $form->error($model, 'name'); ?>
+    <tr>
+        <td>
+    		<?php echo $form->labelEx($model,'name'); ?>
+		</td>
+   		<td>
+		    <?php echo $form->textField($model, 'name'); ?>
+		    <?php echo $form->error($model, 'name'); ?>
+		</td>
+	</tr>
 
-	<?php echo $form->labelEx($model,'email'); ?>
-    <?php echo $form->textField($model, 'email',array('readonly'=>true)); ?>
-    <?php echo $form->error($model, 'email'); ?>
+	<tr>
+        <td>
+            <?php echo $form->labelEx($model,'email'); ?>
+        </td>
+        <td>
+            <?php echo $form->textField($model, 'email'); ?>
+            <br>
+            <?php echo $form->error($model, 'email'); ?>
+        </td>
+    </tr>
 	
-    <?php echo $form->labelEx($model,'password'); ?>
-    <?php echo $form->passwordField($model, 'password',array('value'=>'')); ?>
-    <?php echo $form->error($model, 'password'); ?>
+     <tr>
+        <td>
+            <?php echo $form->labelEx($model,'password'); ?>
+        </td>
+        <td>
+            <?php echo $form->passwordField($model, 'password',array('value'=>'')); ?>
+            <br>
+            <?php echo $form->error($model, 'password'); ?>
+        </td>
+    </tr>
     
-    <?php echo $form->labelEx($model,'confirm password'); ?>
-    <?php echo $form->passwordField($model, 'con_password'); ?>
-    <?php echo $form->error($model, 'con_password'); ?>
+     <tr>
+        <td>
+            <?php echo $form->labelEx($model,'confirm password'); ?>
+        </td>
+        <td>
+            <?php echo $form->passwordField($model, 'con_password'); ?>
+            <br>
+            <?php echo $form->error($model, 'con_password'); ?>
+        </td>
+    </tr>
 
-    <div class="form-group">
-        <?php echo CHtml::submitButton('Save'); ?>
-    </div>
+    <tr>
+        <td colspan="2">
+            <div class="form-group">
+                <?php echo CHtml::submitButton('Save'); ?>
+            </div>
+        </td>
+    </tr>
+</table>
 
 <?php $this->endWidget(); ?>

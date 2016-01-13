@@ -1,9 +1,8 @@
-<span style="align:right;"><?php echo CHtml::link('Add New', $this->createUrl('post/add',array())); ?></span>
 
 <?php /*$this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-	'template'=>"{items}\n{pager}",
+    'dataProvider'=>$dataProvider,
+    'itemView'=>'_view',
+    'template'=>"{items}\n{pager}",
 ));*/ ?>
 <?php //$pageSize=Yii::app()->user->getState('pageSize',Yii::app()->params['defaultPageSize']); ?>
 <?php /*echo CHtml::dropDownList(
@@ -17,6 +16,9 @@
 ?>
 <?php
 if(!Yii::app()->user->isGuest){
+?>
+<span style="align:right;"><?php echo CHtml::link('Add New', $this->createUrl('post/add',array())); ?></span>
+<?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'file-grid',
         'dataProvider'=>$model->search(),
