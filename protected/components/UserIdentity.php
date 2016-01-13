@@ -29,7 +29,6 @@ class UserIdentity extends CUserIdentity
 		
 		}else if(!$user->validatePassword($this->password)){			
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-			echo $this->errorCode;die;
 		/*}elseif($user->u_status == 0){
 			$this->errorCode=self::ERROR_USERNAME_NOT_ACTIVE;
 		}elseif($user->u_mail_verify == 0){

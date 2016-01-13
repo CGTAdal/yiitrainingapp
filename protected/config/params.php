@@ -16,4 +16,10 @@ return array(
 	'commentNeedApproval'=>true,
 	// the copyright information displayed in the footer section
 	'copyrightInfo'=>'Copyright &copy; 2009 by My Company.',
+	// recoeds per page drop down options
+	'pageSizeOptions'=>array('2'=>'2','4'=>'4','6'=>'6','10'=>'10'),
+	//super admin role
+	'superAdminRole'=>1,
+	//sub admin role
+	'subAdminRole'=>2
 );

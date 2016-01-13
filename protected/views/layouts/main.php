@@ -37,6 +37,7 @@
 			),
 		)); ?>
 	</div><!-- mainmenu -->
+	<?php if(!Yii::app()->user->isGuest){ if(Yii::app()->controller->action->id != "edit") ?><div class="pullRight"><?php echo CHtml::link('Edit Profile', $this->createUrl('Post/edit',array())); ?></div><?php } ?>
 
 	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 		'links'=>$this->breadcrumbs,

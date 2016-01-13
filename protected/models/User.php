@@ -6,10 +6,9 @@ class User extends CActiveRecord
 	public $name;
     public $email;
     public $password;
+    public $con_password;
     public $rememberMe;
-
-    private $_identity;
-
+    public $role;
 
     public function hashPassword($password){
 		return CPasswordHelper::hashPassword($password);
@@ -42,58 +41,27 @@ class User extends CActiveRecord
 	public function rules()
 	{
 		return array(
+			array('name,email, password,role','safe'),
 			// username and password are required
-			array('email, password', 'required'),
+			array('name,email, password', 'required'),
 			//email needs to be a valid email address
 			array('email','email'),
-			// rememberMe needs to be a boolean
-			array('rememberMe', 'boolean'),
-			// password needs to be authenticated
-			array('password', 'authenticate'),
+			array('email', 'unique', 'on' => 'add'),
+			//compare passowrd & confirm password
+			array('con_passowrd', 'compare', 'compareAttribute'=>'password' , 'on'=>'edit'),
 		);
 	}
 
-	/**
-	 * Declares attribute labels.
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'rememberMe'=>'Remember me next time',
-		);
-	}
 
-	/**
-	 * Authenticates the password.
-	 * This is the 'authenticate' validator as declared in rules().
-	 */
-	public function authenticate($attribute,$params)
+	public function check_confirm($attribute,$params)
 	{
-		$this->_identity=new UserIdentity($this->email,$this->password);
-		if(!$this->_identity->authenticate())
-			$this->addError('password','Incorrect email or password.');
-	}
+		$this->addError('con_password', 'your password is not strong enough!');
+	    //if(!preg_match($pattern, $this->$attribute))
+	      //$this->addError($attribute, 'your password is not strong enough!');
+	} 
 
-	/**
-	 * Logs in the user using the given email and password in the model.
-	 * @return boolean whether login is successful
-	 */
-	public function login()
-	{
-		if($this->_identity===null)
-		{
-			$this->_identity=new UserIdentity($this->email,$this->password);
-			$this->_identity->authenticate();
-		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
-		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
-			return true;
-		}
-		else
-			return false;
-	}
+
+		
 
 	public function beforeSave() {
 	    if(isset($this->isNewRecord)) 
@@ -103,10 +71,42 @@ class User extends CActiveRecord
 	}
 
 	
-	 public function validatePassword($password)
+	public function validatePassword($password)
 	{
 		return CPasswordHelper::verifyPassword($password,$this->password);
 		//print_r($result);exit;
+	}
+
+	public function search()
+	{
+		$pageSize=Yii::app()->user->getState('pageSize',2);
+		$criteria=new CDbCriteria;
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('email',$this->email,true);
+
+		$sort = new CSort();
+	 	$sort->attributes = array(
+	    	/*'customer'=>array(
+		      	'asc'=>'customer.customer_name',
+		      	'desc'=>'customer.customer_name desc',
+		    ),
+	    	'school'=>array(
+		      	'asc'=>'school.school_name',
+		      	'desc'=>'school.school_name desc',
+		    ),*/
+	    	'name',
+	    	'email',
+	  );
+
+
+		return new CActiveDataProvider('User', array(
+			'criteria'=>$criteria,
+			'sort'=>$sort,
+		    'pagination'=>array(
+		        'pageSize'=> Yii::app()->user->getState('pageSize',$pageSize),
+		    )
+		));
+
 	}
     
 }

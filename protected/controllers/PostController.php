@@ -28,7 +28,7 @@ class PostController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to access 'index' and 'view' actions.
-				'actions'=>array('index','view','login'),
+				'actions'=>array('index','view','login','add'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated users to access all actions
@@ -51,21 +51,46 @@ class PostController extends Controller
 	/*	$userModel = Comment::model()->findAll(); 
 		print_r($userModel);*/
 
+	/*	$Page = new CPagination(ModelName::model()->count($Criteria));
+		$Page->pageSize = 2;
+		$Page->applyLimit($Criteria);*/
+		$Page=	2;
 
-
-
+		 $model = new User('search');
+        // HERE GET YOUR SEARCH PARAMETERS IF ANY
+        //$model->unsetAttributes();
+/*
 		$dataProvider=new CActiveDataProvider('User', array(
 			'criteria'=>array(
 			),
 		    'pagination'=>array(
-		        'pageSize'=>2,
+		        'pageSize'=> Yii::app()->user->getState('pageSize',$Page),
 		    ),
-		));
+		));*/
+		$model->unsetAttributes(); // clear any default values
+		if (isset($_GET['User']))
+			$model->attributes = $_GET['User'];
+
+	/*	if (isset($_GET['pageSize'])) {
+            Yii::app()->user->setState('pageSize',(int)$_GET['pageSize']);
+   		}*/
+
+		if(Yii::app()->request->isAjaxRequest){
+			$this->renderPartial('index',array(
+				//'dataProvider'=>$dataProvider,
+				'pageSize' => $Page,
+				'model'=>$model
+			)); 
+		}else{
+			$this->render('index',array(
+				//'dataProvider'=>$dataProvider,
+				'pageSize' => $Page,
+				'model'=>$model
+			));
+		}
 
 
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		
 
 	}
 
@@ -75,18 +100,19 @@ class PostController extends Controller
 	public function actionAdd()
 	{
 		$model = new User;
+		$model->setScenario('add');
 		$errores	=	array();
 		// If form is submitted and data is correct...
 		// collect user input data
 		if(isset($_POST['User']))
 		{
+			$_POST['User']['role']	=	Yii::app()->params['subAdminRole'];
 			$model->attributes=$_POST['User'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate()){
+			if($model->validate()){ 
 				$model -> save();
 				$this -> redirect(array('post/index'));
 			}else{
-
 				$errores = $model->getErrors();
 			}
 		}			
@@ -107,9 +133,7 @@ class PostController extends Controller
 
 		 $model=$this->loadModel($id); 
 
-		$this->render('update',array(
-			'model'=>$model
-		));
+		
 		if(isset($_POST['User'])){
 			$model->attributes=$_POST['User'];
 			if(!isset($this->isNewRecord)) {
@@ -121,6 +145,9 @@ class PostController extends Controller
 				}
 			}
 		}
+		$this->render('update',array(
+			'model'=>$model
+		));
 	}
 
 	public function loadModel($id)
@@ -137,14 +164,14 @@ class PostController extends Controller
 		if (!defined('CRYPT_BLOWFISH')||!CRYPT_BLOWFISH)
 			throw new CHttpException(500,"This application requires that PHP was compiled with Blowfish support for crypt().");
 
-		$model=new User;
+		$model=new LoginForm;
 
 
 		// collect user input data
-		if(isset($_POST['User']))
+		if(isset($_POST['LoginForm']))
 		{
 				
-			$model->attributes=$_POST['User'];
+			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
 				$this->redirect(Yii::app()->user->returnUrl);
@@ -160,5 +187,27 @@ class PostController extends Controller
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+
+	public function actionEdit(){
+		$model 		= 	new User;
+		$model->setScenario('edit');
+		$user_id	=	Yii::app()->user->getId(); 
+		//$userData	=	User::model()->findAllByAttributes(array('id'=>$id));
+		$model=$this->loadModel($user_id); 
+		if(isset($_POST['User'])){
+			$model->attributes=$_POST['User'];
+			//if(!isset($this->isNewRecord)) {
+				if($model->validate()){
+					if($model->save())
+					$this -> redirect(array('post/index'));
+				}else{
+					$errores = $model->getErrors();
+				}
+			//}
+		}
+		$this->render('edit',array(
+			'model'=>$model
+		));
 	}
 }
