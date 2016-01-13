@@ -6,4 +6,4 @@ $this->breadcrumbs=array(
 ?>
 <h1>About</h1>
 
-<p>This is the "about" page for my blog site.</p>
+<p>learning yii 1.</p>

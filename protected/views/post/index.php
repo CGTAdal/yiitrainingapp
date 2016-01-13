@@ -11,8 +11,11 @@
         $pageSize,
         Yii::app()->params['pageSizeOptions'],
         array('class'=>'change-pageSize'));*/ ?>
+<?php 
+    if(Yii::app()->user->isGuest)
+        echo "<span class='pullRight'>".CHtml::dropDownList('pageSize',$pageSize,Yii::app()->params['pageSizeOptions'],array('onchange'=>" $.fn.yiiGridView.update('file-grid',{ data:{pageSize: $(this).val() }})"))."</span>"; 
+?>
 <?php
-
 if(!Yii::app()->user->isGuest){
     $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'file-grid',
@@ -37,7 +40,7 @@ if(!Yii::app()->user->isGuest){
 
             array(            // display a column with "view", "update" and "delete" buttons
                 'class'=>'CButtonColumn',
-                'header'=>CHtml::dropDownList('pageSize',$pageSize,array(2=>2,4=>4,6=>6,8=>8),array(
+                'header'=>CHtml::dropDownList('pageSize',$pageSize,Yii::app()->params['pageSizeOptions'],array(
                       'onchange'=>" $.fn.yiiGridView.update('file-grid',{ data:{pageSize: $(this).val() }})",
 
                 ))
