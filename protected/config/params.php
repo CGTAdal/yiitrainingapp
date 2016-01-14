@@ -7,7 +7,7 @@ return array(
 	// this is used in error pages
 	'adminEmail'=>'priyanka.rajpurohit@cgt.co.in',
 	// number of posts displayed per page
-	'postsPerPage'=>10,
+	'postsPerPage'=>5,
 	// maximum number of comments that can be displayed in recent comments portlet
 	'recentCommentCount'=>10,
 	// maximum number of tags that can be displayed in tag cloud portlet
@@ -17,7 +17,7 @@ return array(
 	// the copyright information displayed in the footer section
 	'copyrightInfo'=>'Copyright &copy; 2009 by My Company.',
 	// recoeds per page drop down options
-	'pageSizeOptions'=>array('2'=>'2','4'=>'4','6'=>'6','10'=>'10'),
+	'pageSizeOptions'=>array('5'=>'5','10'=>'10','15'=>'15','20'=>'20'),
 	//super admin role
 	'superAdminRole'=>1,
 	//sub admin role

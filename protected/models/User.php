@@ -79,7 +79,7 @@ class User extends CActiveRecord
 
 	public function search()
 	{
-		$pageSize=Yii::app()->user->getState('pageSize',2);
+		$pageSize=Yii::app()->user->getState('pageSize',Yii::app()->params['postsPerPage']);
 		$criteria=new CDbCriteria;
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('email',$this->email,true);

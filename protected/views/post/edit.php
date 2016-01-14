@@ -12,6 +12,7 @@
 		</td>
    		<td>
 		    <?php echo $form->textField($model, 'name'); ?>
+		    <br>
 		    <?php echo $form->error($model, 'name'); ?>
 		</td>
 	</tr>
@@ -27,7 +28,7 @@
         </td>
     </tr>
 	
-     <tr>
+    <tr>
         <td>
             <?php echo $form->labelEx($model,'password'); ?>
         </td>

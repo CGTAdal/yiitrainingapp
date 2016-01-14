@@ -1,36 +1,24 @@
-<?php
-$this->breadcrumbs=array(
-	$model->title,
-);
-$this->pageTitle=$model->title;
-?>
 
-<?php $this->renderPartial('_view', array(
-	'data'=>$model,
-)); ?>
+<table>
+    <tr>
+        <th>Fields</th>
+        <th>Values</th>
+    </tr>
+    <tr>
+        <td>
+            Name:
+        </td>
+        <td>
+        	<?php echo $model->name; ?>
+        </td>
+    </tr>
 
-<div id="comments">
-	<?php if($model->commentCount>=1): ?>
-		<h3>
-			<?php echo $model->commentCount>1 ? $model->commentCount . ' comments' : 'One comment'; ?>
-		</h3>
-
-		<?php $this->renderPartial('_comments',array(
-			'post'=>$model,
-			'comments'=>$model->comments,
-		)); ?>
-	<?php endif; ?>
-
-	<h3>Leave a Comment</h3>
-
-	<?php if(Yii::app()->user->hasFlash('commentSubmitted')): ?>
-		<div class="flash-success">
-			<?php echo Yii::app()->user->getFlash('commentSubmitted'); ?>
-		</div>
-	<?php else: ?>
-		<?php $this->renderPartial('/comment/_form',array(
-			'model'=>$comment,
-		)); ?>
-	<?php endif; ?>
-
-</div><!-- comments -->
+    <tr>
+        <td>
+            Email:
+        </td>
+        <td>
+        	<?php echo $model->email; ?>
+        </td>
+    </tr>
+</table>

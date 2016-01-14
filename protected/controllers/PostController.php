@@ -54,7 +54,8 @@ class PostController extends Controller
 	/*	$Page = new CPagination(ModelName::model()->count($Criteria));
 		$Page->pageSize = 2;
 		$Page->applyLimit($Criteria);*/
-		$Page=	2;
+		$Page=	Yii::app()->params['postsPerPage'];
+		//postsPerPage
 		$model = new User('search');
 
 
@@ -149,6 +150,18 @@ class PostController extends Controller
 			}
 		}
 		$this->render('update',array(
+			'model'=>$model
+		));
+	}
+
+	public function actionView($id)
+	{
+		$model 		= 	new User;
+		//$userData	=	User::model()->findAllByAttributes(array('id'=>$id));
+
+		 $model=$this->loadModel($id); 
+
+		$this->render('view',array(
 			'model'=>$model
 		));
 	}
